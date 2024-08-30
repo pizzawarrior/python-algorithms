@@ -153,3 +153,92 @@
 #         {'first_name': person.first_name, "last_name": person.last_name}
 #             for person in people
 #     ]
+
+
+# # Run length encoding- take the following string and encode it
+# # Notes: Order matters! Dictionaries are not ordered
+# def encode_run(string):
+#     result = ''
+#     i = 0
+#     while i < len(string):
+#         count = 1
+#         while i + 1 < len(string) and string[i] == string[i + 1]:
+#             count += 1
+#             i += 1
+#         result += str(count) + string[i]
+#         i += 1
+#     return result
+
+# run = 'aaabbbcccdabddfeeg'
+# print(encode_run(run))  # Output: '3a2b3c1d1a1b2d1f2e1g'
+
+
+# Run length decoding. Take the solution from above, and decode it back into the input string
+# def decode_run(string):
+#     result = ''
+#     count = 0
+#     if len(string) % 2 != 0:
+#         return 'Error: string is not properly encoded'
+#     for i in range(0, len(string) - 1, 2):
+#         while count < int(string[i]):
+#             result += string[i + 1]
+#             count += 1
+#         count = 0
+#         i += 2
+#     return result
+
+# print(decode_run('3a3b3c1d1a1b2d1f2e1g'))
+
+
+# # Return True when both arguments are arrays that have the same nesting
+# #  structures and same corresponding length of nested arrays.
+# # Note: using recursion and zip(), we break the lists into tuples and check the values
+# def same_structure_as(original, other):
+#     if isinstance(original, list) and isinstance(other, list):
+#         if len(original) != len(other):
+#             return False
+#         return all(same_structure_as(o, e) for o, e in zip(original, other))
+#     return not isinstance(original, list) and not isinstance(other, list)
+
+# print(same_structure_as([ 1, [ 1, 1 ] ], [ 2, [ 2, 2 ] ] )) # True
+# print(same_structure_as([[[], []]], [[[], []]]))  # True
+# print(same_structure_as([[[], []]], [[1, 1]]))  # False
+
+# Write a function called sumIntervals/sum_intervals that accepts an array of intervals, and returns the sum of all the interval lengths.
+# Overlapping intervals should only be counted once.
+# Intervals are represented by a pair of integers in the form of an array. The first value of the interval will always be less than the second value.
+# Interval example: [1, 5] is an interval from 1 to 5. The length of this interval is 4.
+
+# def sum_intervals(list_of_intervals):
+#     # sort intervals first by starting value, then ending value if the have the same starting value
+#     # initialize empty list: merged_intervals
+#     # for interval in merged_intervals
+#         # if it's empty, or the last num of the last interval in merged_intervals is less than the first num of the current interval:
+#             # append current interval
+#         # else:
+#             # set the last value of the last merged_interval to the max of the last value of the last merged_interval or interval[1]
+#         # set total_len var to 0
+#         # for start, end in merged_intervals
+#             #total_len += end - start
+#         # return total_len
+#     sorted_intervals = sorted(list_of_intervals, key=lambda x: (x[0], x[1]))
+
+#     merged_intervals = []
+
+#     for interval in sorted_intervals:
+#         # convert tuple to list for 'else' step below
+#         interval = list(interval)
+#         if not merged_intervals or merged_intervals[-1][1] < interval[0]:
+#             merged_intervals.append(interval)
+#         else:
+#             merged_intervals[-1][1] = max(merged_intervals[-1][1], interval[1])
+#     total_len = 0
+#     for start, end in merged_intervals:
+#         total_len += end - start
+#     return total_len
+
+# print(sum_intervals([
+#    [1, 4],
+#    [7, 10],
+#    [3, 5]
+# ])) # Output: 7
